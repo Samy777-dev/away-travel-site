@@ -1,0 +1,967 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #151515;
+    background: #ffffff;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================
+   VARIÁVEIS
+========================= */
+
+:root {
+    --blue: #071d35;
+    --blue-light: #0d355d;
+    --gold: #c9a34a;
+    --gold-light: #e2c878;
+    --black: #0b0b0b;
+    --white: #ffffff;
+    --gray: #707070;
+    --light: #f5f5f3;
+    --container: 1180px;
+}
+
+
+/* =========================
+   ESTRUTURA
+========================= */
+
+.container {
+    width: min(90%, var(--container));
+    margin: 0 auto;
+}
+
+.section {
+    padding: 110px 0;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+/* =========================
+   HEADER / NAVEGAÇÃO
+========================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 0;
+    background: linear-gradient(180deg, rgba(4, 17, 31, 0.85) 0%, rgba(4, 17, 31, 0) 100%);
+   /* backdrop-filter: blur(8px); */ /* Deixa o fundo levemente desfocado para dar contraste à logo */
+    transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estado do Header ao rolar a página */
+.header.scrolled {
+    background: transparent;
+    padding: 10px 0;
+    box-shadow: none;  
+    height: 42px;
+}
+
+
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+
+.logo img,
+.header-content img {
+    height: 145px !important;
+    width: auto !important;
+    max-width: 200%;
+    max-height: none !important;
+    display: block;
+    object-fit: contain;
+    /* Sombreamento suave para garantir leitura sobre qualquer imagem do slide */
+    filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.4));
+    transition: height 0.3s ease, transform 0.3s ease;
+    margin-left: 8px
+}
+
+
+
+
+@media (max-width: 768px) {
+    .logo img,
+    .header-content img {
+        height: 38px;             /* Tamanho ideal para não ocupar a tela toda no celular */
+        max-width: 150px;
+        padding: 12px 0;                 /* Espaçamento para não colar na borda do header */
+    }
+
+    .header.scrolled .logo img,
+    .header.scrolled .header-content img {
+        height: 55px !important;  /* Ajuste do tamanho da logo ao rolar a página */
+        width: auto !important;
+    }
+}
+.logo:hover img,
+.header-content img:hover {
+    transform: scale(1.03);
+}
+
+/* Menu de navegação */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    margin-left: auto;
+}
+
+.nav a {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Melhora a leitura dos links */
+}
+
+.nav a:hover {
+    color: #fcb80b;
+    transform: translateY(-2px);
+}
+
+.header-whatsapp {
+    padding: 15px 20px;
+    border: 1px solid var(--gold-light);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: 0.3s ease;
+    white-space: nowrap;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.header-whatsapp:hover {
+    background: var(--gold-light);
+    color: var(--black);
+    
+}
+
+.menu-toggle {
+    display: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #ffffff;
+    margin: 8px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--blue);
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 1.5s ease, transform 7s ease;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(4, 17, 31, 0.88) 0%,
+        rgba(4, 17, 31, 0.62) 45%,
+        rgba(4, 17, 31, 0.20) 100%
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 80px;
+}
+
+.hero-tag,
+.section-tag {
+    display: inline-block;
+    color: var(--gold-light);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    color: #ffffff;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(48px, 8vw, 86px);
+    line-height: 0.99;
+    font-weight: 605;
+    margin-bottom: 28px;
+}
+
+.hero h1 span,
+.section-heading h2 span,
+.intro h2 span,
+.about-content h2 span,
+.quote-intro h2 span,
+.final-cta h2 span {
+    color: var(--gold-light);
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+}
+
+.hero-description {
+    max-width: 570px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   BOTÕES GERAIS
+========================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 28px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-gold {
+    background: var(--gold-light);
+    color: #111;
+}
+
+.btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: #ffffff;
+}
+
+.btn-outline:hover {
+    background: #ffffff;
+    color: var(--blue);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+
+/* =========================
+   INDICADORES DO CARROSSEL
+========================= */
+
+/* Corrigido para .hero-indicators conforme o HTML */
+.hero-indicators {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.indicator {
+    width: 28px;
+    height: 3px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.indicator.active {
+    background: var(--gold-light);
+    width: 45px;
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro {
+    background: #ffffff;
+}
+
+.intro-content {
+    max-width: 800px;
+    border-left: 2px solid var(--gold-light);
+    padding-left: 30px;
+}
+
+.intro h2,
+.section-heading h2,
+.about-content h2,
+.quote-intro h2,
+.final-cta h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(39px, 6vw, 59px);
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    color: var(--gray);
+    line-height: 1.9;
+}
+
+
+/* =========================
+   DESTINOS
+========================= */
+
+.destinations {
+    background: var(--light);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.section-heading > p {
+    max-width: 350px;
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.destination-card {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+    background: var(--blue);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.7s ease;
+}
+
+.destination-card:hover img {
+    transform: scale(1.06);
+}
+
+.destination-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        transparent 35%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+
+.destination-card-link {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+}
+
+.destination-content {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 28px;
+    z-index: 2;
+    color: #ffffff;
+}
+
+.destination-content span {
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.destination-content h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 38px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.destination-content p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.82);
+}
+
+
+/* =========================
+   SERVIÇOS
+========================= */
+
+.services {
+    background: #ffffff;
+}
+
+.services .centered {
+    text-align: center;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 55px;
+}
+
+.service-card {
+    padding: 40px 30px;
+    border: 1px solid #e9e9e9;
+    transition: 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: var(--gold-light);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+}
+
+.service-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+    border: 1px solid var(--gold-light);
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.service-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SOBRE
+========================= */
+
+.about {
+    background: var(--blue);
+    color: #ffffff;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 90px;
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+}
+
+.about-content p {
+    color: rgba(255,255,255,0.72);
+    line-height: 1.9;
+    margin-bottom: 18px;
+}
+
+.about-highlight {
+    margin-top: 25px;
+    padding-left: 20px;
+    border-left: 2px solid var(--gold-light);
+}
+
+.about-highlight strong {
+    display: block;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.about-highlight span {
+    font-size: 13px;
+    color: var(--gold-light);
+}
+
+
+/* =========================
+   COTAÇÃO
+========================= */
+
+.quote {
+    background: var(--light);
+}
+
+.quote-grid {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.quote-intro p {
+    color: var(--gray);
+    line-height: 1.8;
+    margin-top: 15px;
+}
+
+.quote-benefits {
+    margin-top: 30px;
+}
+
+.quote-benefits div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.quote-benefits span {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+.quote-form {
+    background: #ffffff;
+    padding: 45px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    padding: 14px 15px;
+    outline: none;
+    color: #222;
+    transition: 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--gold light);
+}
+
+
+/* =========================
+   CTA
+========================= */
+
+.final-cta {
+    position: relative;
+    padding: 120px 0;
+    text-align: center;
+    background: linear-gradient(
+        rgba(7,29,53,0.92),
+        rgba(7,29,53,0.92)
+    ),
+    url("paris.jpg") center/cover;
+}
+
+.final-cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.final-cta p {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background: #050d16;
+    color: #ffffff;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px;
+    padding: 70px 0;
+}
+
+.footer-brand img {
+    width: 145px;
+    margin-bottom: 20px;
+}
+
+.footer-brand p {
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.footer-links,
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+    color: var(--gold-light);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.footer-links a,
+.footer-contact a {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    transition: 0.3s ease;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+    color: var(--gold-light);
+}
+
+.footer-contact span {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 22px 0;
+}
+
+.footer-bottom p {
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+}
+
+
+/* =========================
+   BOTÃO FLUTUANTE DO WHATSAPP
+========================= */
+
+.whatsapp-float {
+    
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 900px) {
+
+    .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--blue);
+        flex-direction: column;
+        justify-content: center;
+        gap: 25px;
+        transition: 0.4s ease;
+        margin: 0;
+    }
+
+    .nav.active {
+        right: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        z-index: 5;
+    }
+
+        .header-whatsapp {
+        display: none;
+        
+    }
+
+    .about-grid,
+    .quote-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .destination-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .section {
+        padding: 75px 0;
+    }
+
+    .logo-area img {
+        width: 130px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-heading > p {
+        margin-top: 20px;
+    }
+
+    .destination-grid,
+    .services-grid,
+    .form-row,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .destination-card {
+        min-height: 400px;
+    }
+
+    .quote-form {
+        padding: 25px;
+    }
+
+    .about-image img {
+        height: 430px;
+    }
+
+}
+
+/* =========================================================
+   AJUSTES DE ESPAÇAMENTO: FORMULÁRIO & BOTÃO
+========================================================= */
+
+/* 1. Afasta cada campo do formulário (inputs) do campo seguinte */
+.form-group,
+#formCotacao input,
+#formCotacao textarea,
+#formCotacao select {
+    margin-bottom: 20px !important;
+}
+
+/* 2. Dá margem e respiro para o botão de enviar cotação */
+#formCotacao button[type="submit"],
+.btn-submit {
+    margin-top: 15px !important;
+    margin-bottom: 25px !important;
+    padding: 14px 28px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 3. Evita que o formulário fique grudado nas bordas da tela/card */
+#formCotacao,
+.cotacao-container {
+    padding: 30px 25px !important;
+}
+
+/* =========================================================
+   NOVA COR DOURADA/ÂMBAR VIBRANTE (MAIS MARCANTE)
+========================================================= */
+
+/* Atualiza as variáveis de cor principal do site */
+:root {
+    --yellow: #ffcd4d !important;
+    --gold: #ffcd4d !important;
+}
+
+/* Aplica o novo tom vibrante com sombra suave para dar leitura total */
+.nav a:hover,
+.hero-content h1 span,
+.hero-content p span,
+.section-title span,
+.highlight,
+.gold-text,
+a.gold-link {
+    color: #FFcd4d !important;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Ajusta botões e elementos que usam a cor de destaque */
+.btn-primary,
+.indicator.active,
+.gold-border {
+    background-color: #ffcd4d !important;
+    border-color: #FFcd4d !important;
+}
